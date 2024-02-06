@@ -2,35 +2,26 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"strconv"
 	"todo-api-golang/db"
 	"todo-api-golang/models"
+	"strconv"
 )
 
-// GetTodos godoc
 // @Summary Get all todos
-// @Description Retrieves a list of all todos in the database
+// @Description Get a list of all todos
 // @Tags todos
-// @Produce json
-// @Success 200 {object} []models.Todo
-// @Failure 500 {object} gin.H
+// @Success 200 {object} gin.H "Success response"
+// @Failure 500 {object} gin.H "Internal server error"
+// @Router /todos [get]
 func GetTodos(c *gin.Context) {
-	var todos []models.Todo
-	database.DB.Find(&todos)
+    var todos []models.Todo
+    database.DB.Find(&todos)
 
-	c.JSON(200, gin.H{"data": todos})
+    c.JSON(200, gin.H{"data": todos})
 }
 
-// CreateTodo godoc
-// @Summary Create a new todo
-// @Description Creates a new todo with the specified title and completed status
-// @Tags todos
-// @Accept json
-// @Param todo body models.Todo true "Todo details"
-// @Success 201 {object} models.Todo
-// @Failure 400 {object} gin.H
-// @Failure 422 {object} gin.H
-// @Failure 500 {object} gin.H
+
+// CreateTodo creates a new todo
 func CreateTodo(c *gin.Context) {
 	var input models.Todo
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -44,16 +35,7 @@ func CreateTodo(c *gin.Context) {
 	c.JSON(201, gin.H{"data": todo})
 }
 
-// GetTodoByID godoc
-// @Summary Get a todo by ID
-// @Description Retrieves a single todo by its ID
-// @Tags todos
-// @Produce json
-// @Param id path int true "Todo ID"
-// @Success 200 {object} models.Todo
-// @Failure 400 {object} gin.H
-// @Failure 404 {object} gin.H
-// @Failure 500 {object} gin.H
+// GetTodoByID returns a todo by ID
 func GetTodoByID(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -71,18 +53,7 @@ func GetTodoByID(c *gin.Context) {
 	c.JSON(200, gin.H{"data": todo})
 }
 
-// UpdateTodo godoc
-// @Summary Update a todo by ID
-// @Description Updates an existing todo with the specified ID
-// @Tags todos
-// @Accept json
-// @Param id path int true "Todo ID"
-// @Param todo body models.Todo true "Updated todo details"
-// @Success 200 {object} models.Todo
-// @Failure 400 {object} gin.H
-// @Failure 404 {object} gin.H
-// @Failure 422 {object} gin.H
-// @Failure 500 {object} gin.H
+// UpdateTodo updates a todo by ID
 func UpdateTodo(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -111,16 +82,7 @@ func UpdateTodo(c *gin.Context) {
 	c.JSON(200, gin.H{"data": existingTodo})
 }
 
-// DeleteTodo godoc
-// @Summary Delete a todo by ID
-// @Description Deletes a single todo by its ID
-// @Tags todos
-// @Produce json
-// @Param id path int true "Todo ID"
-// @Success 200 {object} gin.H
-// @Failure 400 {object} gin.H
-// @Failure 404 {object} gin.H
-// @Failure 500 {object} gin.H
+// DeleteTodo deletes a todo by ID
 func DeleteTodo(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

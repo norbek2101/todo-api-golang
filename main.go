@@ -10,26 +10,17 @@ import (
 	
 )
 
-// @title Swagger Example API
+// @title Todo API
 // @version 1.0
-// @description This is a sample server Petstore server.
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
-// @host petstore.swagger.io
-// @BasePath /v2
+// @description This is a simple To-Do API using Golang and PostgreSQL
+// @host localhost:8080
+// @BasePath /
 func main() {
 	database.Connect()
 
 	router := routes.SetupRouter()
 
-	// programmatically set swagger info
+	// // programmatically set swagger info
 	docs.SwaggerInfo.Title = "Swagger Example API"
 	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
 	docs.SwaggerInfo.Version = "1.0"
